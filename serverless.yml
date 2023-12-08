@@ -1,0 +1,31 @@
+service: blockchain-hdbank
+frameworkVersion: '3'
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorysize : 128
+  region : ap-south-1
+  stage : ${opt:stage, 'dev'}
+
+functions:
+  addBlock:
+    handler: src/handlers/addBlock.handler
+    events:
+      - httpApi:
+          path: /addblock
+          method: post
+  viewBlock:
+    handler: src/handlers/viewBlock.handler
+    events:
+      - httpApi:
+          path: /viewBlock
+          method: get
+  isChainValid:
+    handler: src/handlers/isChainValid.handler
+    events:
+      - httpApi:
+          path: /isChainValid
+          method: get
